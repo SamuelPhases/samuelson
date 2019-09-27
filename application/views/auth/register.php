@@ -1,3 +1,6 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?>
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 <head>
@@ -53,34 +56,102 @@ data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
                   <p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2 my-1">
                     <span>Using Email</span>
                   </p>
+                  <?php
+                  if($this->session->flashdata('error') != ''){
+                  ?>
+                  <div class="alert bg-danger alert-icon-left alert-arrow-left alert-dismissible mb-2" role="alert">
+                    <span class="alert-icon"><i class="la la-thumbs-o-down"></i></span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                    <?php echo $this->session->flashdata('error'); ?>
+                  </div>
+                <?php  }?>
                   <div class="card-body pt-0">
-                    <form class="form-horizontal" action="index.html">
-                      <fieldset class="form-group floating-label-form-group">
-                        <label for="user-name">User Name</label>
-                        <input type="text" class="form-control" id="user-name" placeholder="User Name">
-                      </fieldset>
-                      <fieldset class="form-group floating-label-form-group">
-                        <label for="user-email">Your Email Address</label>
-                        <input type="email" class="form-control" id="user-email" placeholder="Your Email Address">
-                      </fieldset>
-                      <fieldset class="form-group floating-label-form-group mb-1">
-                        <label for="user-password">Enter Password</label>
-                        <input type="password" class="form-control" id="user-password" placeholder="Enter Password">
-                      </fieldset>
-                      <div class="form-group row">
-                        <div class="col-md-6 col-12 text-center text-sm-left">
-                          <fieldset>
-                            <input type="checkbox" id="remember-me" class="chk-remember">
-                            <label for="remember-me"> Remember Me</label>
-                          </fieldset>
+                    <form class="form-horizontal" action="<?php echo base_url() ?>auth/reg_user" method="POST">
+                      <fieldset class="form-group position-relative has-icon-left mb-1">
+                        <input
+                          required
+                          type="text"
+                          class="form-control form-control-lg input-lg"
+                          placeholder="Your Full Name"
+                          name="name"
+                          autofocus
+                        />
+                        <div class="form-control-position">
+                          <i class="ft-user"></i>
                         </div>
-                        <div class="col-md-6 col-12 float-sm-left text-center text-sm-right"><a href="recover-password.html" class="card-link">Forgot Password?</a></div>
-                      </div>
+                      </fieldset>
+                      <fieldset class="form-group position-relative has-icon-left mb-1">
+                        <input
+                          required
+                          type="email"
+                          class="form-control form-control-lg input-lg"
+                          placeholder="Your Email Address"
+                          name="email"
+                        />
+                        <div class="form-control-position">
+                          <i class="ft-mail"></i>
+                        </div>
+                      </fieldset>
+                      <fieldset class="form-group position-relative has-icon-left mb-1">
+                        <input
+                          type="text"
+                          class="form-control form-control-lg input-lg"
+                          placeholder="Your Phone Number"
+                          name="phone"
+                          required
+                        />
+                        <div class="form-control-position">
+                          <i class="ft-phone"></i>
+                        </div>
+                      </fieldset>
+                      <fieldset class="form-group position-relative mb-1">
+                        <select
+                          class="form-control form-control-lg input-lg"
+                          name="country"
+                          required
+                          id="country"
+                          onchange="return get_state(this.value)"
+                        >
+                          <option>Select Country</option>
+                          <?php  
+                          $countries = $this->db->get('countries')->result_array();
+                          foreach ($countries as $country):
+                          ?>
+                          <option value="<?php echo $country['id']; ?>"><?php echo $country['name']; ?></option>
+                          <?php  
+                          endforeach;
+                          ?>
+                        </select>
+                      </fieldset>
+                      <fieldset class="form-group position-relative mb-1">
+                        <select
+                          class="form-control form-control-lg input-lg"
+                          name="state"
+                          id="state"
+                          required
+                        >
+                          <option>Select State</option>
+                        </select>
+                      </fieldset>
+                      <fieldset class="form-group position-relative has-icon-left mb-1">
+                        <input
+                          type="password"
+                          class="form-control form-control-lg input-lg"
+                          placeholder="Enter Password"
+                          name="password"
+                          required
+                        />
+                        <div class="form-control-position">
+                          <i class="la la-key"></i>
+                        </div>
+                      </fieldset>
                       <button type="submit" class="btn btn-outline-info btn-block"><i class="ft-user"></i> Register</button>
                     </form>
                   </div>
                   <div class="card-body pt-0">
-                    <a href="login-with-bg.html" class="btn btn-outline-danger btn-block"><i class="ft-unlock"></i> Login</a>
+                    <a href="<?php echo base_url() ?>auth/login" class="btn btn-outline-danger btn-block"><i class="ft-unlock"></i> Login</a>
                   </div>
                 </div>
               </div>
@@ -104,5 +175,17 @@ data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
   <!-- BEGIN PAGE LEVEL JS-->
   <script src="<?php echo base_url() ?>assets/admin/js/scripts/forms/form-login-register.js" type="text/javascript"></script>
   <!-- END PAGE LEVEL JS-->
+
+  <script>
+    function get_state(country) {
+        $.ajax({
+            url: '<?php echo base_url();?>auth/get_state/' + country ,
+            success: function(response)
+            {
+              $('div select#state').html(response);
+            },
+        });
+    }
+  </script>
 </body>
 </html>

@@ -29,10 +29,10 @@
                   <img src="<?php echo base_url() ?>assets/admin/images/portrait/small/avatar-s-19.png" alt="avatar"><i></i></span>
               </a>
               <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="<?php echo base_url() ?>welcome/profile"><i class="ft-user"></i> Edit Profile</a>
-                <a class="dropdown-item" href="<?php echo base_url() ?>welcome/settings"><i class="ft-settings"></i> Settings</a>
+                <a class="dropdown-item" href="<?php echo base_url() ?>user/profile"><i class="ft-user"></i> Edit Profile</a>
+                <a class="dropdown-item" href="<?php echo base_url() ?>user/settings"><i class="ft-settings"></i> Settings</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#"><i class="ft-power"></i> Logout</a>
+                <a class="dropdown-item" href="<?php echo base_url() ?>auth/logout"><i class="ft-power"></i> Logout</a>
               </div>
             </li>
             <li class="dropdown dropdown-notification nav-item">

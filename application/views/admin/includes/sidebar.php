@@ -8,7 +8,7 @@
           </a>
         </li>
         <li class="nav-item <?php echo $page_name == 'profile' ? 'active' : '' ?>">
-          <a href="<?php echo base_url() ?>welcome/profile">
+          <a href="<?php echo base_url() ?>user/profile">
             <i class="la la-user"></i>
             <span class="menu-title" data-i18n="">My Profile</span>
           </a>
@@ -17,13 +17,13 @@
           <span data-i18n="nav.category.layouts">Investment</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Layouts"></i>
         </li>
         <li class="nav-item <?php echo $page_name == 'investment_packages' ? 'active' : '' ?>">
-          <a href="<?php echo base_url() ?>welcome/investment_packages">
+          <a href="<?php echo base_url() ?>user/investment_packages">
             <i class="la la-briefcase"></i>
             <span class="menu-title" data-i18n="">Investment Packages</span>
           </a>
         </li>
         <li class="nav-item <?php echo $page_name == 'myinvestments' ? 'active' : '' ?>">
-          <a href="<?php echo base_url() ?>welcome/myinvestments">
+          <a href="<?php echo base_url() ?>user/myinvestments">
             <i class="la la-bar-chart"></i>
             <span class="menu-title" data-i18n="">My Investments</span>
           </a>
@@ -32,19 +32,19 @@
           <span data-i18n="nav.category.layouts">Admin</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Layouts"></i>
         </li>
         <li class="nav-item <?php echo $page_name == 'users' ? 'active' : '' ?>">
-          <a href="<?php echo base_url() ?>welcome/users">
+          <a href="<?php echo base_url() ?>user/users">
             <i class="la la-users"></i>
             <span class="menu-title" data-i18n="">All Users</span>
           </a>
         </li>
         <li class="nav-item <?php echo $page_name == 'alltickets' ? 'active' : '' ?>">
-          <a href="<?php echo base_url() ?>welcome/alltickets">
+          <a href="<?php echo base_url() ?>user/alltickets">
             <i class="la la-ticket"></i>
             <span class="menu-title" data-i18n="">All Tickets</span>
           </a>
         </li>
         <li class="nav-item <?php echo $page_name == 'allinvestment' ? 'active' : '' ?>">
-          <a href="<?php echo base_url() ?>welcome/allinvestment">
+          <a href="<?php echo base_url() ?>user/allinvestment">
             <i class="la la-briefcase"></i>
             <span class="menu-title" data-i18n="">All Investments</span>
           </a>
@@ -53,7 +53,7 @@
           <span data-i18n="nav.category.layouts">Support</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Layouts"></i>
         </li>
         <li class="nav-item <?php echo $page_name == 'tickets' ? 'active' : '' ?>">
-          <a href="<?php echo base_url() ?>welcome/tickets">
+          <a href="<?php echo base_url() ?>user/tickets">
             <i class="la la-ticket"></i>
             <span class="menu-title" data-i18n="">Help Ticket</span>
           </a>

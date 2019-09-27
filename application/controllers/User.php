@@ -1,10 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class User extends CI_Controller {
 
 	public function index()
 	{
+		if ($this->session->userdata('login_check') != 'go@yes')
+            redirect(base_url(), 'refresh');
+        
 		$page_data['page_name'] = 'dashboard';
 		$page_data['page_title'] = 'Dashboard';
 		$this->load->view('admin/dashboard', $page_data);
@@ -58,13 +61,4 @@ class Welcome extends CI_Controller {
 		$this->load->view('admin/settings', $page_data);
 	}
 
-	public function login()
-	{
-		$this->load->view('auth/login');
-	}
-
-	public function register()
-	{
-		$this->load->view('auth/register');
-	}
 }

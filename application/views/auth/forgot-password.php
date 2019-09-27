@@ -43,69 +43,58 @@ data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
       <div class="content-header row">
       </div>
       <div class="content-body">
-        <section class="flexbox-container">
-          <div class="col-12 d-flex align-items-center justify-content-center">
-            <div class="col-md-4 col-10 box-shadow-2 p-0">
-              <div class="card border-grey border-lighten-3 m-0">
-                <div class="card-header border-0">
-                  <div class="card-title text-center">
-                    <div class="p-1">
-                      <img src="<?php echo base_url() ?>assets/admin/images/logo/logo-dark.png" alt="branding logo">
-                    </div>
-                  </div>
-                </div>
-                <div class="card-content">
-                  <p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2">
-                    <span>Using Account Details</span>
-                  </p>
-                  <?php
-                  if($this->session->flashdata('error') != ''){
-                  ?>
-                  <div class="alert bg-danger alert-icon-left alert-arrow-left alert-dismissible mb-2" role="alert">
-                    <span class="alert-icon"><i class="la la-thumbs-o-down"></i></span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">×</span>
-                    </button>
-                    <?php echo $this->session->flashdata('error'); ?>
-                  </div>
-                <?php  }?>
-                  <div class="card-body pt-0">
-                    <form class="form-horizontal" action="<?php echo base_url() ?>auth/auth_user" method="POST">
-                      <fieldset class="form-group position-relative has-icon-left mb-1">
-                        <input type="email" class="form-control form-control-lg input-lg" name="email" placeholder="Your Email">
-                        <div class="form-control-position">
-                          <i class="ft-mail"></i>
-                        </div>
-                      </fieldset>
-                      <fieldset class="form-group position-relative has-icon-left mb-1">
-                        <input type="password" class="form-control form-control-lg input-lg" name="password" placeholder="Enter Password">
-                        <div class="form-control-position">
-                          <i class="la la-key"></i>
-                        </div>
-                      </fieldset>
-                      <div class="form-group row">
-                        <div class="col-md-6 col-12 text-center text-sm-left">
-                          <fieldset>
-                            <!-- <input type="checkbox" id="remember-me" class="chk-remember">
-                            <label for="remember-me"> Remember Me</label> -->
-                          </fieldset>
-                        </div>
-                        <div class="col-md-6 col-12 float-sm-left text-center text-sm-right"><a href="<?php echo base_url() ?>auth/forgotpwd" class="card-link">Forgot Password?</a></div>
-                      </div>
-                      <button type="submit" class="btn btn-outline-info btn-block"><i class="ft-unlock"></i> Login</button>
-                    </form>
-                  </div>
-                  <p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2 my-1">
-                    <span>New to Modern ?</span>
-                  </p>
-                  <div class="card-body">
-                    <a href="<?php echo base_url() ?>auth/register" class="btn btn-outline-danger btn-block"><i class="ft-user"></i> Register</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+       
+       	<section class="flexbox-container">
+		  <div class="col-12 d-flex align-items-center justify-content-center">
+		    <div class="col-md-4 col-10 box-shadow-2 p-0">
+		      <div class="card border-grey border-lighten-3 px-2 py-2 m-0">
+		        <div class="card-header border-0 pb-0">
+		          <div class="card-title text-center">
+		            <img src="<?php echo base_url() ?>assets/admin/images/logo/logo-dark.png" alt="branding logo">
+		          </div>
+		          <h6
+		            class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2"
+		          >
+		            <span>We will send you a link to reset password.</span>
+		          </h6>
+		        </div>
+		        <div class="card-content">
+		          <div class="card-body">
+		            <form class="form-horizontal" action="<?php echo base_url() ?>auth/resetpwd">
+		              <fieldset class="form-group position-relative has-icon-left">
+		                <input
+		                  type="email"
+		                  class="form-control form-control-lg input-lg"
+		                  placeholder="Your Email Address"
+		                  required
+		                  name="email"
+		                />
+		                <div class="form-control-position">
+		                  <i class="ft-mail"></i>
+		                </div>
+		              </fieldset>
+		              <button
+		                type="submit"
+		                class="btn btn-outline-info btn-lg btn-block"
+		              >
+		                <i class="ft-unlock"></i> Recover Password
+		              </button>
+		            </form>
+		          </div>
+		        </div>
+		        <div class="card-footer border-0">
+		          <p class="float-sm-left text-center">
+		            <a href="<?php echo base_url() ?>auth/login" class="card-link">Login</a>
+		          </p>
+		          <p class="float-sm-right text-center">
+		            <a href="<?php echo base_url() ?>auth/register" class="card-link">Create Account</a>
+		          </p>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</section> 
+
       </div>
     </div>
   </div>
