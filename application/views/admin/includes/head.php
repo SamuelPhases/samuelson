@@ -25,5 +25,5 @@
   <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/admin/vendors/css/cryptocoins/cryptocoins.css">
   <!-- END Page Level CSS-->
   <!-- BEGIN Custom CSS-->
-  <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/admin/css/style.css">
+<!--   <link rel="stylesheet" type="text/css" href="<?php //echo base_url() ?>assets/admin/css/style.css"> -->
   <!-- END Custom CSS-->

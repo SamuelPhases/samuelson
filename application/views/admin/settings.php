@@ -54,13 +54,24 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
                         aria-labelledby="base-tab31"
                       >
                         <div class="panel">
-                          <form
-                            class="mt-3"
-                          >
+                          <!-- Alert -->
+                          <?php
+                          if($this->session->flashdata('success') != ''){
+                          ?>
+                          <div class="alert alert-icon-left alert-success alert-dismissible mb-2" role="alert">
+                            <span class="alert-icon"><i class="la la-thumbs-o-up"></i></span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                            <strong><?php echo $this->session->flashdata('success'); ?></strong>
+                          </div>
+                          <?php } ?>
+                          <!-- -->
+                          <form class="mt-3" method="POST" action="<?php echo base_url() ?>user/admin/newpackage">
                             <div class="form-group">
                               <input
                                 type="text"
-                                formControlName="name"
+                                name="name"
                                 placeholder="Package name"
                                 class="form-control"
                               />
@@ -68,7 +79,7 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
                             <div class="form-group">
                               <input
                                 type="number"
-                                formControlName="price"
+                                name="price"
                                 placeholder="Package price"
                                 class="form-control"
                               />
@@ -76,7 +87,7 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
                             <div class="form-group">
                               <input
                                 type="number"
-                                formControlName="roi"
+                                name="roi"
                                 placeholder="Package roi"
                                 class="form-control"
                               />
@@ -92,21 +103,23 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
                       </div>
                       <div class="tab-pane" id="tab32" aria-labelledby="base-tab32">
                         <div class="panel">
-                          <form
-                            class="mt-3"
-                          >
+                          <!-- Alert -->
+                          <?php
+                          if($this->session->flashdata('btcsuccess') != ''){
+                          ?>
+                          <div class="alert alert-icon-left alert-success alert-dismissible mb-2" role="alert">
+                            <span class="alert-icon"><i class="la la-thumbs-o-up"></i></span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                            <strong><?php echo $this->session->flashdata('btcsuccess'); ?></strong>
+                          </div>
+                          <?php } ?>
+                          <!-- -->
+                          <form class="mt-3" method="POST" action="<?php echo base_url() ?>user/admin/addBtc">
                             <div class="form-group">
-                              <input
-                                type="text"
-                                formControlName="btcAccount"
-                                placeholder="Set Application bitcoin wallet address"
-                                class="form-control"
-                                value=""
-                              />
-                              <button
-                                type="submit"
-                                class="btn btn-info mt-1"
-                              >
+                              <input type="text" name="btcAccount" placeholder="Set Application bitcoin wallet address" class="form-control" value="<?php echo $this->db->get_where('system_settings',array('ID'=>1))->row()->BTC_ADDRESS ?>"/>
+                              <button type="submit" class="btn btn-info mt-1">
                                 Save Bitcoin Address
                               </button>
                             </div>
@@ -114,21 +127,23 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
                         </div>
 
                         <div class="panel">
-                          <form
-                            class="mt-3"
-                          >
+                          <!-- Alert -->
+                          <?php
+                          if($this->session->flashdata('ethsuccess') != ''){
+                          ?>
+                          <div class="alert alert-icon-left alert-success alert-dismissible mb-2" role="alert">
+                            <span class="alert-icon"><i class="la la-thumbs-o-up"></i></span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                            <strong><?php echo $this->session->flashdata('ethsuccess'); ?></strong>
+                          </div>
+                          <?php } ?>
+                          <!-- -->
+                          <form class="mt-3" method="POST" action="<?php echo base_url() ?>user/admin/addEth">
                             <div class="form-group">
-                              <input
-                                type="text"
-                                formControlName="etherAccount"
-                                placeholder="Set Application etherium wallet address"
-                                class="form-control"
-                                value=""
-                              />
-                              <button
-                                type="submit"
-                                class="btn btn-info mt-1"
-                              >
+                              <input type="text" name="etherAccount" placeholder="Set Application etherium wallet address" class="form-control" value="<?php echo $this->db->get_where('system_settings',array('ID'=>1))->row()->ETH_ADDRESS ?>"/>
+                              <button type="submit" class="btn btn-info mt-1">
                                 Save Etherium Address
                               </button>
                             </div>

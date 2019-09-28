@@ -42,6 +42,54 @@ class Crud_model extends CI_Model {
         );
     }
 
+    function newpackage()
+    {
+        $package_data = array(
+            'NAME' => $this->input->post("name"),
+            'PRICE' => $this->input->post("price"),
+            'ROI' => $this->input->post("roi"),
+        );
+
+        $this->db->insert('packages', $package_data);
+        $package_id = $this->db->insert_id();
+
+        return array(
+            'inserted' => 'done',
+            'msg' => 'New Package Added Successfully',
+            'package_id' => $package_id
+        );
+    }
+
+    function addBtc()
+    {
+        $btc_data = array(
+            'BTC_ADDRESS' => $this->input->post("btcAccount"),
+        );
+
+        $this->db->where('ID', 1);
+        $this->db->update('system_settings', $btc_data);
+
+        return array(
+            'inserted' => 'done',
+            'msg' => 'New BTC Address Added Successfully',
+        );
+    }
+
+    function addEth()
+    {
+        $eth_data = array(
+            'ETH_ADDRESS' => $this->input->post("etherAccount"),
+        );
+
+        $this->db->where('ID', 1);
+        $this->db->update('system_settings', $eth_data);
+
+        return array(
+            'inserted' => 'done',
+            'msg' => 'New ETH Address Added Successfully',
+        );
+    }
+
     //check if email exist
     function check_email($email='')
     {

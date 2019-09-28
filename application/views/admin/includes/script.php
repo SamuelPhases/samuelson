@@ -11,5 +11,5 @@
   <script src="<?php echo base_url() ?>assets/admin/js/scripts/customizer.js" type="text/javascript"></script>
   <!-- END MODERN JS-->
   <!-- BEGIN PAGE LEVEL JS-->
-  <script src="<?php echo base_url() ?>assets/admin/js/scripts/pages/dashboard-crypto.js" type="text/javascript"></script>
+<!--   <script src="<?php //echo base_url() ?>assets/admin/js/scripts/pages/dashboard-crypto.js" type="text/javascript"></script> -->
   <!-- END PAGE LEVEL JS-->
