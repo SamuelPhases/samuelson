@@ -86,7 +86,7 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
                             </div>
                             <div class="form-group">
                               <input
-                                type="number"
+                                type="text"
                                 name="roi"
                                 placeholder="Package roi"
                                 class="form-control"
