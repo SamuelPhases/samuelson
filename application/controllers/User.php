@@ -143,6 +143,12 @@ class User extends CI_Controller {
 	    		redirect(base_url() . 'auth/investment_packages','refresh');
 	    	}
         }
+
+        if ($param1=='activate') {
+        	echo $this->input->post("user_id")."===";
+        	echo $this->input->post("purchase_id")."<br><br>";
+        	print_r($this->input->post("pop"));
+        }
 	}
 
 }

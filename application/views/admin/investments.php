@@ -52,6 +52,19 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
               </div>
               <?php } ?>
             </div>
+            <!-- Alert -->
+            <?php
+            //if($this->session->flashdata('pursuccess') != ''){
+            ?>
+            <div class="alert alert-icon-left alert-success alert-dismissible mb-2" role="alert">
+              <span class="alert-icon"><i class="la la-thumbs-o-up"></i></span>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+              <strong>hyh<?php //echo $this->session->flashdata('pursuccess'); ?></strong>
+            </div>
+            <?php //} ?>
+            <!-- -->
           </div>
           <div class="col-1"></div>
         </div>
@@ -65,10 +78,69 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
           <div class="col-10">
             
             <div class="row">
+              <?php  
+              $btcAddress = $this->db->get_where('system_settings', array('ID'=>1))->row()->BTC_ADDRESS;
+              $ethAddress = $this->db->get_where('system_settings', array('ID'=>1))->row()->ETH_ADDRESS;
+
+              $all_purchase = $purchase->result_array();
+              foreach ($all_purchase as $row):
+                $package_name = $this->db->get_where('packages', array('ID'=>$row['PACKAGE_ID']))->row()->NAME;
+                $package_price = $this->db->get_where('packages', array('ID'=>$row['PACKAGE_ID']))->row()->PRICE;
+                $package_roi = $this->db->get_where('packages', array('ID'=>$row['PACKAGE_ID']))->row()->ROI;
+              ?>
               <div class="col-md-6 col-sm-12">
                 <div class="card">
+                  <?php  
+                  if($row['STATUS']=='INACTIVE'){
+                  ?>
+
                   <div class="card-header">
                     <h4 class="card-title danger text-bold-600">Not Activated</h4>
+                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                    <div class="heading-elements">
+                      <ul class="list-inline mb-0">
+                        <li><a data-action="collapse"><i class="ft-plus"></i></a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="card-content collapse" style="">
+                    <div class="card-body">
+                      <h4 class="font-large-2 text-bold-400">$<?php echo number_format($package_price); ?></h4>
+                      <p class="blue-grey lighten-2 mb-0"><?php echo $package_name; ?></p>
+                      <div>
+                        <p class="blue-grey lighten-2">
+                          Your plan is inactive, make payment worth of $<?php echo number_format($package_price); ?>
+                          <br />
+                          BTC to this address
+                          <br />
+                          <code>
+                            <?php echo $btcAddress; ?>
+                          </code>
+                          <br />
+                          or
+                          <br />
+                          ETH
+                          <br />
+                          <code>
+                            <?php echo $ethAddress; ?>
+                          </code>
+                          <br />
+                          and click on the button below to upload payment proof to
+                          activate this plan
+                        </p>
+                    <form method="POST" action="<?php echo base_url() ?>user/usersactivities/activate">
+                      <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+                      <input type="hidden" name="purchase_id" value="<?php echo $row['ID']; ?>">
+                        <input type="file" class="btn btn-default mt-10" name="pop" />
+                      </div>
+                      <button type="submit" class="btn btn-info mt-2">Activate Plan</button>
+                    </form>
+                    </div>
+                  </div>
+
+                <?php } else{ ?>
+
+                  <div class="card-header">
                     <h4 class="card-title success text-bold-600">Activated</h4>
                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                     <div class="heading-elements">
@@ -79,8 +151,8 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
                   </div>
                   <div class="card-content collapse" style="">
                     <div class="card-body">
-                      <h4 class="font-large-2 text-bold-400">$50.00</h4>
-                      <p class="blue-grey lighten-2 mb-0">Silver Pack</p>
+                      <h4 class="font-large-2 text-bold-400">$<?php echo number_format($package_price); ?></h4>
+                      <p class="blue-grey lighten-2 mb-0"><?php echo $package_name; ?></p>
                       <div *ngIf="activate">
                         <p class="blue-grey lighten-2" *ngIf="!inv.active">
                           Your plan is inactive, make payment worth of $50.00
@@ -102,16 +174,18 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
                           and click on the button below to upload payment proof to
                           activate this plan
                         </p>
-                        <input
-                          type="file"
-                          class="btn btn-default mt-10"
-                          value="Activate Plan"/>
+                        <input type="file" class="btn btn-default mt-10" value="Activate Plan"/>
                       </div>
                       <button class="btn btn-info mt-2">Activate Plan</button>
                     </div>
                   </div>
+
+                <?php } ?>
                 </div>
               </div>
+              <?php  
+              endforeach;
+              ?>
             </div>
 
           </div>
