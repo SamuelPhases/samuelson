@@ -90,6 +90,22 @@ class Crud_model extends CI_Model {
         );
     }
 
+    function purchase_pac($user_id, $purchase_id)
+    {
+        $purchase_data = array(
+            'USER_ID' => $user_id,
+            'PACKAGE_ID' => $purchase_id,
+            'STATUS' => 'INACTIVE',
+        );
+
+        $this->db->insert('purchase', $purchase_data);
+
+        return array(
+            'inserted' => 'done',
+            'msg' => 'Your purchase was Successful'
+        );
+    }
+
     //check if email exist
     function check_email($email='')
     {

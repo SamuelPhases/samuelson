@@ -126,4 +126,23 @@ class User extends CI_Controller {
         }
 	}
 
+	function usersactivities($param1='', $param2='', $param3='')
+	{
+		if ($this->session->userdata('login_check') != 'go@yes')
+            redirect(base_url(), 'refresh');
+
+        if ($param1=='purchase') {
+        	$user_id = $param2;
+        	$purchase_id = $param3;
+        	$purchase_pac = $this->Crud_model->purchase_pac($user_id, $purchase_id); 
+	    	if($purchase_pac['inserted']=='done'){
+	    		$this->session->set_flashdata('pursuccess', $purchase_pac['msg']);
+	    		redirect(base_url() . 'user/investment_packages','refresh');
+	    	} else{
+	    		$this->session->set_flashdata('purerror', $purchase_pac['msg']);
+	    		redirect(base_url() . 'auth/investment_packages','refresh');
+	    	}
+        }
+	}
+
 }
