@@ -54,16 +54,25 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
             </div>
             <!-- Alert -->
             <?php
-            //if($this->session->flashdata('pursuccess') != ''){
+            if($this->session->flashdata('popsuccess') != ''){
             ?>
             <div class="alert alert-icon-left alert-success alert-dismissible mb-2" role="alert">
               <span class="alert-icon"><i class="la la-thumbs-o-up"></i></span>
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
-              <strong>hyh<?php //echo $this->session->flashdata('pursuccess'); ?></strong>
+              <strong><?php echo $this->session->flashdata('popsuccess'); ?></strong>
             </div>
-            <?php //} ?>
+            <?php } elseif ($this->session->flashdata('poperror') != '') {
+              ?>
+            <div class="alert alert-icon-left alert-danger alert-dismissible mb-2" role="alert">
+              <span class="alert-icon"><i class="la la-thumbs-o-down"></i></span>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+              <strong><?php echo $this->session->flashdata('poperror'); ?></strong>
+            </div>
+          <?php } ?>
             <!-- -->
           </div>
           <div class="col-1"></div>
@@ -107,7 +116,10 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
                     <div class="card-body">
                       <h4 class="font-large-2 text-bold-400">$<?php echo number_format($package_price); ?></h4>
                       <p class="blue-grey lighten-2 mb-0"><?php echo $package_name; ?></p>
-                      <div>
+                        <?php 
+                        if($row['POP'] == 0){
+                        ?>
+                        <div>
                         <p class="blue-grey lighten-2">
                           Your plan is inactive, make payment worth of $<?php echo number_format($package_price); ?>
                           <br />
@@ -128,13 +140,22 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
                           and click on the button below to upload payment proof to
                           activate this plan
                         </p>
-                    <form method="POST" action="<?php echo base_url() ?>user/usersactivities/activate">
-                      <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
-                      <input type="hidden" name="purchase_id" value="<?php echo $row['ID']; ?>">
-                        <input type="file" class="btn btn-default mt-10" name="pop" />
-                      </div>
-                      <button type="submit" class="btn btn-info mt-2">Activate Plan</button>
-                    </form>
+                            <form method="POST" enctype="multipart/form-data" action="<?php echo base_url() ?>user/usersactivities/activate">
+                              <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+                              <input type="hidden" name="purchase_id" value="<?php echo $row['ID']; ?>">
+                                <input type="file" class="btn btn-default mt-10" name="pop" />
+                                <button type="submit" class="btn btn-info mt-2">Activate Plan</button>
+                            </form>
+                        </div>
+                        <?php
+                        } else{
+                          echo '
+                          <div class="alert alert-secondary mb-2" role="alert">
+                            <strong>Awaiting Activation</strong>
+                          </div>
+                          ';
+                        }
+                        ?>
                     </div>
                   </div>
 
@@ -153,30 +174,6 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
                     <div class="card-body">
                       <h4 class="font-large-2 text-bold-400">$<?php echo number_format($package_price); ?></h4>
                       <p class="blue-grey lighten-2 mb-0"><?php echo $package_name; ?></p>
-                      <div *ngIf="activate">
-                        <p class="blue-grey lighten-2" *ngIf="!inv.active">
-                          Your plan is inactive, make payment worth of $50.00
-                          <br />
-                          BTC to this address
-                          <br />
-                          <code>
-                            1NgnzXujTZbtnc796888787887fDPFWZzm33
-                          </code>
-                          <br />
-                          or
-                          <br />
-                          ETH
-                          <br />
-                          <code>
-                            1NgnzXujTZbtnc796888787887fDPFWZzm33
-                          </code>
-                          <br />
-                          and click on the button below to upload payment proof to
-                          activate this plan
-                        </p>
-                        <input type="file" class="btn btn-default mt-10" value="Activate Plan"/>
-                      </div>
-                      <button class="btn btn-info mt-2">Activate Plan</button>
                     </div>
                   </div>
 

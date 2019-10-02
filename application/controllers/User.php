@@ -87,7 +87,7 @@ class User extends CI_Controller {
 
 	
 	////// BACKEND CODE ///////////////
-	function admin($param1='')
+	function admin($param1='', $param2='')
 	{
 		if ($this->session->userdata('login_check') != 'go@yes')
             redirect(base_url(), 'refresh');
@@ -99,7 +99,7 @@ class User extends CI_Controller {
 	    		redirect(base_url() . 'user/settings','refresh');
 	    	} else{
 	    		$this->session->set_flashdata('error', $newpackage['msg']);
-	    		redirect(base_url() . 'auth/settings','refresh');
+	    		redirect(base_url() . 'user/settings','refresh');
 	    	}
         }
 
@@ -110,7 +110,7 @@ class User extends CI_Controller {
 	    		redirect(base_url() . 'user/settings','refresh');
 	    	} else{
 	    		$this->session->set_flashdata('btcerror', $addBtc['msg']);
-	    		redirect(base_url() . 'auth/settings','refresh');
+	    		redirect(base_url() . 'user/settings','refresh');
 	    	}
         }
 
@@ -121,8 +121,20 @@ class User extends CI_Controller {
 	    		redirect(base_url() . 'user/settings','refresh');
 	    	} else{
 	    		$this->session->set_flashdata('etherror', $addEth['msg']);
-	    		redirect(base_url() . 'auth/settings','refresh');
+	    		redirect(base_url() . 'user/settings','refresh');
 	    	}
+        }
+
+        if ($param1 == 'activate_plan') {
+        	$purchase_id = $param2;
+        	$pur_data = array(
+	            'STATUS' => 'ACTIVE',
+	        );
+        	$this->db->where('ID', $purchase_id);
+	        $this->db->update('purchase', $pur_data);
+
+	        $this->session->set_flashdata('activesuccess', 'Plan activated successfully');
+    		redirect(base_url() . 'user/allinvestment','refresh');
         }
 	}
 
@@ -140,14 +152,29 @@ class User extends CI_Controller {
 	    		redirect(base_url() . 'user/investment_packages','refresh');
 	    	} else{
 	    		$this->session->set_flashdata('purerror', $purchase_pac['msg']);
-	    		redirect(base_url() . 'auth/investment_packages','refresh');
+	    		redirect(base_url() . 'user/investment_packages','refresh');
 	    	}
         }
 
         if ($param1=='activate') {
-        	echo $this->input->post("user_id")."===";
-        	echo $this->input->post("purchase_id")."<br><br>";
-        	print_r($this->input->post("pop"));
+        	$user_id = $this->input->post("user_id");
+        	$purchase_id = $this->input->post("purchase_id");
+        	
+	        if (move_uploaded_file($_FILES['pop']['tmp_name'], 'uploads/pop/'. $purchase_id .'.png')) {
+	        	
+	        	$pur_data = array(
+		            'POP' => 1,
+		        );
+	        	$this->db->where('ID', $purchase_id);
+		        $this->db->where('USER_ID', $user_id);
+		        $this->db->update('purchase', $pur_data);
+
+		        $this->session->set_flashdata('popsuccess', 'Proof uploaded successfully');
+	    		redirect(base_url() . 'user/myinvestments','refresh');
+	        } else{
+	        	$this->session->set_flashdata('poperror', 'Something went wrong during upload, please try again.');
+	    		redirect(base_url() . 'user/myinvestments','refresh');
+	        }
         }
 	}
 
