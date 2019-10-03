@@ -1,3 +1,15 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+// User Info
+$user_id = $this->session->userdata('login_id');
+$full_name = $this->db->get_where('users', array('ID'=>$user_id))->row()->FULL_NAME;
+$phone = $this->db->get_where('users', array('ID'=>$user_id))->row()->PHONE;
+$country = $this->db->get_where('users', array('ID'=>$user_id))->row()->COUNTRY;
+$state = $this->db->get_where('users', array('ID'=>$user_id))->row()->STATE;
+$email = $this->db->get_where('users', array('ID'=>$user_id))->row()->EMAIL;
+$wallet = $this->db->get_where('users', array('ID'=>$user_id))->row()->WALLET;
+?>
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 <head>
@@ -11,32 +23,55 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
   <?php include 'includes/sidebar.php'; ?>
   <div class="app-content content">
     <div class="content-wrapper">
-      <div class="content-header row">
+      <div class="content-header row"> 
       </div>
       <div class="content-body">
         
         <div class="row">
           <div class="col-12">
             <div class="card profile-card-with-cover">
+              <!-- Alert -->
+              <?php
+              if($this->session->flashdata('walletsuccess') != ''){
+              ?>
+              <div class="alert alert-icon-left alert-success alert-dismissible mb-2" role="alert">
+                <span class="alert-icon"><i class="la la-thumbs-o-up"></i></span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+                <strong><?php echo $this->session->flashdata('walletsuccess'); ?></strong>
+              </div>
+              <?php } elseif ($this->session->flashdata('pwdsuccess') != '') { ?>
+                <div class="alert alert-icon-left alert-success alert-dismissible mb-2" role="alert">
+                  <span class="alert-icon"><i class="la la-thumbs-o-up"></i></span>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                  <strong><?php echo $this->session->flashdata('pwdsuccess'); ?></strong>
+                </div>
+              <?php } elseif ($this->session->flashdata('pwderror') != '') { ?>
+                <div class="alert alert-icon-left alert-danger alert-dismissible mb-2" role="alert">
+                  <span class="alert-icon"><i class="la la-thumbs-o-down"></i></span>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                  <strong><?php echo $this->session->flashdata('pwderror'); ?></strong>
+                </div>
+              <?php } ?>
+
               <div class="card-content">
                 <div class="card-profile-image text-center mt-3">
                   <img
                     src="<?php echo base_url() ?>assets/admin/images/portrait/small/avatar-s-19.png"
                     class="rounded-circle img-border box-shadow-1"
-                    alt="-OakTradex"
+                    alt="OakTradex"
                     height="150px"
                     width="150px"
                   />
                   <fieldset class="form-group mt-2">
                     <div class="custom-file col-4 col-offset-4">
-                      <input
-                        type="file"
-                        class="custom-file-input"
-                        id="inputGroupFile01"
-                      />
-                      <label class="custom-file-label" for="inputGroupFile01"
-                        >Change Photo</label
-                      >
+                      <input type="file" class="custom-file-input" id="inputGroupFile01"/>
+                      <label class="custom-file-label" for="inputGroupFile01">Change Photo</label>
                     </div>
                   </fieldset>
                 </div>
@@ -78,31 +113,31 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
                       <dl class="row">
                         <dt class="col-sm-3 text-right">Full Name</dt>
                         <dd class="col-sm-9 text-left">
-                          John Doe
+                          <?php echo $full_name; ?>
                         </dd>
                       </dl>
                       <dl class="row">
                         <dt class="col-sm-3 text-right">Email</dt>
                         <dd class="col-sm-9 text-left">
-                          hello@samuelsonokoi.com
+                          <?php echo $email; ?>
                         </dd>
                       </dl>
                       <dl class="row">
                         <dt class="col-sm-3 text-right">Phone Number</dt>
                         <dd class="col-sm-9 text-left">
-                          +1 5555 555 5555
+                          <?php echo $phone; ?>
                         </dd>
                       </dl>
                       <dl class="row">
                         <dt class="col-sm-3 text-right">Country</dt>
                         <dd class="col-sm-9 text-left">
-                          United States
+                          <?php echo $this->db->get_where('countries', array('id'=>$country))->row()->name; ?>
                         </dd>
                       </dl>
                       <dl class="row">
                         <dt class="col-sm-3 text-right">State</dt>
                         <dd class="col-sm-9 text-left">
-                          Huston, Texas
+                          <?php echo $this->db->get_where('states', array('id'=>$state))->row()->name; ?>
                         </dd>
                       </dl>
                       <dl class="row">
@@ -112,13 +147,16 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
                         </dd>
                       </dl>
                       <dl class="row">
-                        <dt class="col-sm-3 text-right">Wallet Address</dt>
-                        <dd
-                          class="col-sm-9 text-left">
+                        <dt class="col-sm-3 text-right">BTC Wallet Address</dt>
+                        <dd class="col-sm-9 text-left">
+                          <?php  
+                          echo $wallet==''? '
                           <p>
                             You have no wallet address set at the moment, please use
                             the set wallet address tab below to add one.
                           </p>
+                          ' : $wallet;
+                          ?>
                         </dd>
                       </dl>
                     </div>
@@ -173,58 +211,26 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
                         </div>
                       </div>
                       <div class="tab-pane" id="tab32" aria-labelledby="base-tab32">
-                        <form
-                          [formGroup]="addressForm"
-                          (ngSubmit)="saveAddress()"
-                          class="mt-3"
-                        >
+                        <form class="mt-3" method="POST" action="<?php echo base_url() ?>user/usersactivities/addwallet">
                           <div class="form-group">
-                            <input
-                              type="text"
-                              formControlName="address"
-                              placeholder="Set your bitcoin wallet address"
-                              class="form-control"
-                              value="{{ user?.btcAddress }}"
-                            />
-                            <button
-                              [disabled]="addressForm.invalid"
-                              type="submit"
-                              class="btn btn-info mt-1"
-                            >
+                            <input type="text" required name="walletaddress" placeholder="Set your bitcoin wallet address" class="form-control" value="<?php echo $wallet; ?>"/>
+                            <button type="submit" class="btn btn-info mt-1">
                               Save
                             </button>
                           </div>
                         </form>
                       </div>
                       <div class="tab-pane" id="tab33" aria-labelledby="base-tab33">
-                        <form
-                          [formGroup]="updatePasswordForm"
-                          (ngSubmit)="updatePassword()"
-                          class="mt-3"
-                        >
+                        <form class="mt-3" method="POST" action="<?php echo base_url() ?>user/usersactivities/changepwd">
                           <div class="row">
                             <div class="form-group col-6">
-                              <input
-                                type="password"
-                                formControlName="newPassword"
-                                placeholder="Enter new password"
-                                class="form-control"
-                              />
+                              <input required type="password" name="newPassword" placeholder="Enter new password" class="form-control"/>
                             </div>
                             <div class="form-group col-6">
-                              <input
-                                type="password"
-                                formControlName="confirmPassword"
-                                placeholder="Confirm new password"
-                                class="form-control"
-                              />
+                              <input required type="password" name="confirmPassword" placeholder="Confirm password" class="form-control"/>
                             </div>
                           </div>
-                          <button
-                            [disabled]="updatePasswordForm.invalid"
-                            type="submit"
-                            class="btn btn-info"
-                          >
+                          <button type="submit" class="btn btn-info">
                             Change Password
                           </button>
                         </form>

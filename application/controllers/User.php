@@ -176,6 +176,38 @@ class User extends CI_Controller {
 	    		redirect(base_url() . 'user/myinvestments','refresh');
 	        }
         }
+
+        if ($param1=='addwallet') {
+        	$user_id = $this->session->userdata('login_id');
+        	$wallet_data = array(
+	            'WALLET' => $this->input->post('walletaddress'),
+	        );
+	        $this->db->where('ID', $user_id);
+	        $this->db->update('users', $wallet_data);
+
+	        $this->session->set_flashdata('walletsuccess', 'BTC wallet added successfully');
+    		redirect(base_url() . 'user/profile','refresh');
+        }
+
+        if ($param1=='changepwd') {
+        	$user_id = $this->session->userdata('login_id');
+        	$pwd1 = $this->input->post('newPassword');
+        	$pwd2 = $this->input->post('confirmPassword');
+
+        	if ($pwd1 === $pwd2) {
+        		$pwd_data = array(
+		            'PASSWORD' => sha1( $this->config->item('salt').$pwd1 ),
+		        );
+		        $this->db->where('ID', $user_id);
+		        $this->db->update('users', $pwd_data);
+
+		        $this->session->set_flashdata('pwdsuccess', 'Password changed successfully');
+	    		redirect(base_url() . 'user/profile','refresh');
+        	} else{
+        		$this->session->set_flashdata('pwderror', 'Password missmatch. Please make sure both password fields match!');
+	    		redirect(base_url() . 'user/profile','refresh');
+        	}
+        }
 	}
 
 }
