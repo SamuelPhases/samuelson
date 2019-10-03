@@ -3,7 +3,7 @@
 <head>
   <?php include 'includes/head.php'; ?>
 </head>
-<body class="vertical-layout vertical-menu-modern 2-columns   menu-expanded fixed-navbar"
+<body class="vertical-layout vertical-menu-modern 2-columns menu-expanded fixed-navbar"
 data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
   <!-- fixed-top-->
   <?php include 'includes/navbar.php'; ?>
@@ -40,12 +40,16 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
                                   aria-label="Country: activate to sort column ascending" style="width: 58px;">Country</th>
                                 <th class="sorting" tabindex="0" aria-controls="users-contacts" rowspan="1" colspan="1"
                                   aria-label="State: activate to sort column ascending" style="width: 58px;">State</th>
-                                <th class="sorting" tabindex="0" aria-controls="users-contacts" rowspan="1" colspan="1"
-                                  aria-label="Actions: activate to sort column ascending" style="width: 61px;">Actions</th>
+                                <!-- <th class="sorting" tabindex="0" aria-controls="users-contacts" rowspan="1" colspan="1"
+                                  aria-label="Actions: activate to sort column ascending" style="width: 61px;">Actions</th> -->
                               </tr>
                             </thead>
                             <tbody>
-                              <tr role="row" *ngFor="let user of users">
+                              <?php  
+                              $users = $this->db->get('users')->result_array();
+                              foreach($users as $row):
+                              ?>
+                              <tr role="row">
                                 <td>
                                   <div class="media">
                                     <div class="media-left pr-1">
@@ -54,21 +58,25 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
                                           alt="avatar"><i></i></span>
                                     </div>
                                     <div class="media-body media-middle">
-                                      <a href="#" class="media-heading">John Doe</a>
+                                      <a href="#" class="media-heading"><?php echo $row['FULL_NAME'] ?></a>
                                     </div>
                                   </div>
                                 </td>
                                 <td class="text-center">
-                                  <a href="mailto:hello@samuelson.com" target="_blank">hello@samuelson.com</a>
+                                  <a href="mailto:<?php echo $row['EMAIL'] ?>" target="_blank"><?php echo $row['EMAIL'] ?></a>
                                 </td>
-                                <td><a href="tel:+1 5555 555 5555" target="_blank">+1 5555 555 5555</a></td>
+                                <td><a href="tel:<?php echo $row['PHONE'] ?>" target="_blank"><?php echo $row['PHONE'] ?></a></td>
                                 <td class="text-center">
-                                  United States
+                                  <?php  
+                                  echo $this->db->get_where('countries', array('id'=>$row['COUNTRY']))->row()->name;
+                                  ?>
                                 </td>
                                 <td class="text-center">
-                                  Huston, Texas
+                                  <?php  
+                                  echo $this->db->get_where('states', array('id'=>$row['STATE']))->row()->name;
+                                  ?>
                                 </td>
-                                <td>
+                                <!-- <td>
                                   <span class="dropdown">
                                     <button id="btnSearchDrop2" type="button" data-toggle="dropdown" aria-haspopup="true"
                                       aria-expanded="true" class="btn btn-primary dropdown-toggle dropdown-menu-right">
@@ -79,19 +87,12 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
                                       <a href="#" class="dropdown-item"><i class="ft-trash-2"></i> Delete</a>
                                     </span>
                                   </span>
-                                </td>
+                                </td> -->
                               </tr>
+                              <?php  
+                              endforeach;
+                              ?>
                             </tbody>
-                            <tfoot>
-                              <tr>
-                                <th rowspan="1" colspan="1">Name</th>
-                                <th rowspan="1" colspan="1">Email</th>
-                                <th rowspan="1" colspan="1">Phone</th>
-                                <th rowspan="1" colspan="1">Country</th>
-                                <th rowspan="1" colspan="1">State</th>
-                                <th rowspan="1" colspan="1">Actions</th>
-                              </tr>
-                            </tfoot>
                           </table>
                         </div>
                       </div>
